@@ -1,11 +1,12 @@
-import './App.css';
+import React from "react"
+import Header from "./components/Header"
 
 function App() {
   return (
-    <div className="App">
-     <h1>Meme Generator</h1>
+    <div>
+     <Header />
     </div>
   );
 }
 
-export default App;
+export default App
