@@ -1,21 +1,6 @@
 import React from "react"
-// import memesData from "../memesData.js"
 
 function Meme() {
-
-    // Challange: 
-    // As soon ass the Meme component loads the first time,
-    // make an API call to "https://api.imgflip.com/get_memes".
-    //
-    // When the data comes in, save just the memes array part
-    // of that data to the "allMemes" state
-    //
-    // Think about if theree are any dependencies that, if they
-    // change, you'd want to cause to re-run this function.
-    //
-    // Hint: for now, don't try to use an async/wait function.
-    // Instead, use '.then()' blocks to resolve the promises
-    // from using 'feth'. we'll learn why after this challange.
 
     const [meme, setMeme] = React.useState({
         topText: "",
@@ -25,13 +10,32 @@ function Meme() {
 
     const [allMemes, setAllMemes] = React.useState([])
 
+    /*
     React.useEffect( () => {
         fetch("https://api.imgflip.com/get_memes")
             .then(res => res.json())
             .then(data => setAllMemes(data.data.memes))
     }, [])
+    */
+    
+    /*
+    useEffect takes a function as its parameter. If that function 
+    returns something, it needs to be a cleanup function. Otherwise,
+    it should return nothing. If we make it an async function, it 
+    automatically returns a promise instead of a function or nothing.
+    Therefore, if you want to use async operation inside of useEffect,
+    you need to define the function separately inside of the callback
+    function, as seen below:
+    */
 
-    // console.log(allMemes)
+    React.useEffect(() => {
+        async function getMemes() {
+            const res = await fetch("https://api.imgflip.com/get_memes")
+            const data = await res.json()
+            setAllMemes(data.data.memes)
+        }
+        getMemes()
+    }, [])
 
     function getMemeImage() {
         const randomNumber = Math.floor(Math.random() * allMemes.length)
